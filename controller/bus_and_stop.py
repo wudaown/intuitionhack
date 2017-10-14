@@ -114,5 +114,20 @@ def dumb(etaToNear, Spos, Tpos, bus):
 				etaToDest[i]=etaToDest[i-1]
 		flag=True
 	return etaToNear, etaToDest
+
+def judge(code, pos, stops):
+	if stops=="RED":
+		for i in range(0, len(stops)-1):
+			maxlon=max(float(stops[i].pos[0]), float(stops[i+1].pos[0]))
+			minlon=min(float(stops[i].pos[0]), float(stops[i+1].pos[0]))
+			maxlat=max(float(stops[i].pos[1]), float(stops[i+1].pos[1]))
+			minlat=min(float(stops[i].pos[1]), float(stops[i+1].pos[1]))
+			if minlon<=pos[0]<=maxlon and minlat<=pos[1]<=maxlat:
+				for j in range(i+1, len(stops)):
+					if type(stops[j].code) is str:
+						if stops[j].code==code:
+							return True
+						else:
+							return False
 #E=bus_queue("RED", "27011")
 #print(E)

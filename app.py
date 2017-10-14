@@ -99,11 +99,19 @@ destFake = [
 
 @app.route('/todo/api/v1.0/notify', methods=['POST','GET'])
 def notify():
-	orgPos=(yourLocation[0]['lon'], yourLocation[0]['lat'])
+	j = destFake[0]['code']
+	stops=[]
+	for i in red_stop:
+		if j == i.code:
+			stops=red_stop
+			break
+	if stops==[]:
+		stops=blue_stop
 	if request.method == 'POST':
 		while(True):
 			time.sleep(10)
-			if (judge(destFake[0]['code'], orgPos)):
+			orgPos=(yourLocation[0]['lon'], yourLocation[0]['lat'])
+			if (judge(destFake[0]['code'], orgPos, stops)):
 				return "GET OUT"
 
 
