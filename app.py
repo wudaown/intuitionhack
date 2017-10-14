@@ -100,6 +100,7 @@ destFake = [
 @app.route('/todo/api/v1.0/notify', methods=['POST','GET'])
 def notify():
 	j = destFake[0]['code']
+	print(j)
 	stops=[]
 	for i in red_stop:
 		if j == i.code:
