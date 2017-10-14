@@ -33,6 +33,7 @@ def init_red():
 #red_line_stops, dist=init_red()
 #print(dist)
 red_line_stops, dist_red=init_red()
+#print("1st")
 def init_blue():
 	blue_line_stops=[]
 	dist=[]
@@ -41,6 +42,7 @@ def init_blue():
 def bus_queue(colour, code):
 	ETA=[]
 	if colour=="RED":
+		#print('R')
 		b=Bus()
 		b.update_response()
 		bus=b.get_red()
@@ -85,3 +87,7 @@ def bus_queue(colour, code):
 		for i in range(0, len(ETA)):
 			ETA[i]=str(ETA[i])+" min"
 	return ETA
+
+
+E=bus_queue("RED", "27011")
+print(E)
