@@ -19,7 +19,7 @@ stopName = 'Lee Wee Nam Library'
 def ETA():
 	for i in red_stop:
 		if (i.name == stopName or i.code == stopName):
-			eta = bus_queue(i.code,i.line)
+			eta = bus_queue(red_stop, red_dist, i.code,i.line)
 			print(eta)
 			return jsonify(eta)
 
@@ -67,11 +67,11 @@ def goToLocation():
 	else:
 		nearStop = get_nearest_bus_stop(yourLocation[0]['lon'],yourLocation[0]['lat'],blue_stop,'driving')
 
-	etaToNear = bus_queue(nearStop.code, nearStop.line)
+	etaToNear = bus_queue(red_stop, red_dist, nearStop.code, nearStop.line)
 
 	destInfo = getStopInfo(yourLocation[0]['destStop'], line, red_stop, blue_stop)
 	print(destInfo.pos)
-	etaToDest = bus_queue(destInfo.line,destInfo.code)
+	etaToDest = bus_queue(red_stop, red_dist, destInfo.line,destInfo.code)
 	orgPos = (yourLocation[0]['lon'],yourLocation[0]['lat'])
 	wTime = walkTime(orgPos, destInfo.pos)
 
