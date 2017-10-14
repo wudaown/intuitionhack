@@ -26,7 +26,7 @@ def insert(stop,index,lon,lat,line,fake,code, name):
 
 
 def distance(orginPos, destPos, method):
-	api_key = 'AIzaSyD-wIj4RjFGgZQriqGlMAdvwS1i2ZOcLYI'
+	api_key = 'AIzaSyDrd69lDQMX6WddnqVI8uSmR4pDBwhdUzc'
 	base_url = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
 
 	origins = [str(orginPos[1]) + ' ' + str(orginPos[0])]
@@ -57,15 +57,18 @@ def distance(orginPos, destPos, method):
 				cell = row['elements'][idst]
 			if cell['status'] == 'OK':
 				res = cell['distance']['text'].split()
+				print(res)
 				if res[1] == 'm':
 					return float(res[0])
 				elif res[1] == 'km':
 					return float(res[0]) * 1000
 			else:
+				print(cell['status'])
 				return cell['status']
 
 def get_nearest_bus_stop(lon,lat,stops,method):
 	mindis = math.inf
+	# mindis = 4294967296
 	for st in stops:
 		if st.fake:
 			continue
@@ -80,12 +83,10 @@ def get_nearest_bus_stop(lon,lat,stops,method):
 def getStopInfo(stopName, line, redStops, blueStops):
 	if line == 'RED':
 		for i in redStops:
-			print(i.name)
 			if stopName == i.name and not i.fake:
 				return i
 	else:
 		for i in blueStops:
-			print(i.name)
 			if	stopName == i.name and not i.fake:
 				return i
 

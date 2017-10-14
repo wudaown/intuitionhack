@@ -20,7 +20,6 @@ def ETA():
 	for i in red_stop:
 		if (i.name == stopName or i.code == stopName):
 			eta = bus_queue(red_stop, red_dist, i.code,i.line)
-			print(eta)
 			return jsonify(eta)
 
 
@@ -46,19 +45,16 @@ yourLocation = [
 def goToLocation():
 	flag = False
 
-	print("hello world")
 	while ( not flag):
 		for i in red_stop:
 			if (yourLocation[0]['destStop'] == i.name):
 				line = i.line
-				print(line)
 				flag = True
 				break
 
 		for i in blue_stop:
 			if (yourLocation[0]['destStop'] == i.name):
 				line = i.line
-				print(line)
 				flag = True
 				break
 
@@ -70,17 +66,22 @@ def goToLocation():
 	etaToNear = bus_queue(red_stop, red_dist, nearStop.code, nearStop.line)
 
 	destInfo = getStopInfo(yourLocation[0]['destStop'], line, red_stop, blue_stop)
-	print(destInfo.pos)
 	etaToDest = bus_queue(red_stop, red_dist, destInfo.line,destInfo.code)
 	orgPos = (yourLocation[0]['lon'],yourLocation[0]['lat'])
 	wTime = walkTime(orgPos, destInfo.pos)
-	if not etaToNear=="--":
-		etaToNear = 0;
+	etaToNear = [4.7, '--', 9.6, 9.6, 15.57]
+	etaToDest = [4.7, '--', 9.6, 9.6, 15.57]
+
+	for i in range(len(etaToNear)):
+		if (etaToDest[i] == '--' or etaToNear == '--'):
+			pass
+		else:
+			etaToDest[i] = etaToNear[i] + etaToDest[i]
 	result = [
 		{
 			'walk time' : wTime,
 			'bus arrival time' : etaToNear,
-			'total time by bus' : etaToDest + etaToNear
+			'total time by bus' : etaToDest
 		}
 	]
 	return jsonify(result)
