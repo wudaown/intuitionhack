@@ -43,6 +43,6 @@ class Bus():
     def get_red(self):
         return self.bus_r
 
-#b = Bus()
-#b.update_response()
-#print(b.get_red())
+b = Bus()
+b.update_response()
+print(b.get_blue())
