@@ -74,15 +74,22 @@ def goToLocation():
 	etaToDest = bus_queue(red_stop, red_dist, destInfo.line,destInfo.code)
 	orgPos = (yourLocation[0]['lon'],yourLocation[0]['lat'])
 	wTime = walkTime(orgPos, destInfo.pos)
-
-	result = [
-		{
-			'walk time' : wTime,
-			'bus arrival time' : etaToNear,
-			'total time by bus' : etaToDest + etaToNear
-		}
-	]
-
+	if not etaToNear=="--":
+		result = [
+			{
+				'walk time' : wTime,
+				'bus arrival time' : etaToNear,
+				'total time by bus' : etaToDest + etaToNear
+			}
+		]
+	else:
+		result = [
+			{
+				'walk time' : wTime,
+				'bus arrival time' : etaToNear,
+				'total time by bus' : etaToNear
+			}
+		]
 	return jsonify(result)
 
 

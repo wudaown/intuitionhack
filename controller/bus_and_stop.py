@@ -78,13 +78,17 @@ def bus_queue(stops, dist, colour, code):
 					if done:
 						break
 		ETA=sorted(ETA, key=itemgetter(0))
+		flag=True
 		for i in range(0, len(ETA)):
 			Dist, index=ETA[i]
-			ETA[i]=int(3.6*Dist/float(bus[i]["speed"])/60)
-			if i and ETA[i]<ETA[i-1]:
+			if bus[index]["speed"]=="0":
+				ETA[i]="--"
+				flag=False
+				continue
+			ETA[i]=3.6*Dist/float(bus[index]["speed"])/60
+			if i and flag and ETA[i]<ETA[i-1]:
 				ETA[i]=ETA[i-1]
-		for i in range(0, len(ETA)):
-			ETA[i]=str(ETA[i])+" min"
+				flag=True
 	return ETA
 
 
