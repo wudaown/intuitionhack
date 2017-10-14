@@ -75,21 +75,14 @@ def goToLocation():
 	orgPos = (yourLocation[0]['lon'],yourLocation[0]['lat'])
 	wTime = walkTime(orgPos, destInfo.pos)
 	if not etaToNear=="--":
-		result = [
-			{
-				'walk time' : wTime,
-				'bus arrival time' : etaToNear,
-				'total time by bus' : etaToDest + etaToNear
-			}
-		]
-	else:
-		result = [
-			{
-				'walk time' : wTime,
-				'bus arrival time' : etaToNear,
-				'total time by bus' : etaToNear
-			}
-		]
+		etaToNear = 0;
+	result = [
+		{
+			'walk time' : wTime,
+			'bus arrival time' : etaToNear,
+			'total time by bus' : etaToDest + etaToNear
+		}
+	]
 	return jsonify(result)
 
 
