@@ -63,11 +63,12 @@ def goToLocation():
 	else:
 		nearStop = get_nearest_bus_stop(yourLocation[0]['lon'],yourLocation[0]['lat'],blue_stop,'driving')
 
-	etaToNear = bus_queue(red_stop, red_dist, nearStop.code, nearStop.line)
+	etaToNear, bus = bus_queue(red_stop, red_dist, nearStop.code, nearStop.line)
 
 	destInfo = getStopInfo(yourLocation[0]['destStop'], line, red_stop, blue_stop)
-	etaToDest = bus_queue(red_stop, red_dist, destInfo.line,destInfo.code)
-	orgPos = (yourLocation[0]['lon'],yourLocation[0]['lat'])
+	#etaToDest = bus_queue(red_stop, red_dist, destInfo.line,destInfo.code)
+	etaToNear, etaToDest = dumb(etaToNear, nearStop.pos, destInfo.pos, bus)
+	orgPos=(yourLocation[0]['lon'], yourLocation[0]['lat'])
 	wTime = walkTime(orgPos, destInfo.pos)
 	etaToNear = [4.7, '--', 9.6, 9.6, 15.57]
 	etaToDest = [4.7, '--', 9.6, 9.6, 15.57]

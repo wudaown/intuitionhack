@@ -40,6 +40,7 @@ def init_blue():
 def bus_queue(stops, dist, colour, code):
 	#red_line_stops ,dist_red =  init_red()
 	ETA=[]
+	bus=None
 	if colour=="RED":
 		#print('R')
 		b=Bus()
@@ -78,6 +79,7 @@ def bus_queue(stops, dist, colour, code):
 					if done:
 						break
 		ETA=sorted(ETA, key=itemgetter(0))
+		'''
 		flag=True
 		for i in range(0, len(ETA)):
 			Dist, index=ETA[i]
@@ -88,9 +90,29 @@ def bus_queue(stops, dist, colour, code):
 			ETA[i]=3.6*Dist/float(bus[index]["speed"])/60
 			if i and flag and ETA[i]<ETA[i-1]:
 				ETA[i]=ETA[i-1]
-				flag=True
-	return ETA
+			flag=True
+		'''
+	return ETA, bus
 
-
+def dumb(etaToNear, Spos, Tpos, bus):
+	etaToDest=[]
+	flag=True
+	DIST=distance(Spos, Tpos, "driving")
+	for i in range(etaToNear):
+		Dist, index=etaToNear[i]
+		if bus[index]["speed"]=="0":
+			etaToNear[i]="--"
+			etaToDest.append("--")
+			flag=False
+			continue
+		etaToNear[i]=3.6*Dist/float(bus[index]["speed"])/60
+		etaToDest.append(3.6*(Dist+DIST)/float(bus[index]["speed"])/60)
+		if i and flag:
+			if etaToNear[i]<etaToNear[i-1]:
+				etaToNear[i]=etaToNear[i-1]
+			if etaToDest[i]<etaToDest[i-1]:
+				etaToDest[i]=etaToDest[i-1]
+		flag=True
+	return etaToNear, etaToDest
 #E=bus_queue("RED", "27011")
 #print(E)
