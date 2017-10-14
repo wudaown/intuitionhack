@@ -70,14 +70,14 @@ def goToLocation():
 	etaToNear, etaToDest = dumb(etaToNear, nearStop.pos, destInfo.pos, bus)
 	orgPos=(yourLocation[0]['lon'], yourLocation[0]['lat'])
 	wTime = walkTime(orgPos, destInfo.pos)
-	etaToNear = [4.7, '--', 9.6, 9.6, 15.57]
-	etaToDest = [4.7, '--', 9.6, 9.6, 15.57]
+	# etaToNear = [4.7, '--', 9.6, 9.6, 15.57]
+	# etaToDest = [4.7, '--', 9.6, 9.6, 15.57]
 
-	for i in range(len(etaToNear)):
-		if (etaToDest[i] == '--' or etaToNear == '--'):
-			pass
-		else:
-			etaToDest[i] = etaToNear[i] + etaToDest[i]
+	# for i in range(len(etaToNear)):
+	# 	if (etaToDest[i] == '--' or etaToNear == '--'):
+	# 		pass
+	# 	else:
+	# 		etaToDest[i] = etaToNear[i] + etaToDest[i]
 	result = [
 		{
 			'walk time' : wTime,

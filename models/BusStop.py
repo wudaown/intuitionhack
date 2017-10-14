@@ -57,7 +57,6 @@ def distance(orginPos, destPos, method):
 				cell = row['elements'][idst]
 			if cell['status'] == 'OK':
 				res = cell['distance']['text'].split()
-				print(res)
 				if res[1] == 'm':
 					return float(res[0])
 				elif res[1] == 'km':
