@@ -56,18 +56,21 @@ def distance(orginPos, destPos, method):
 				row = x['rows'][isrc]
 				cell = row['elements'][idst]
 			if cell['status'] == 'OK':
-				return cell['distance']['text']
+				res = cell['distance']['text'].split()
+				if res[1] == 'm':
+					return float(res[0])
+				elif res[1] == 'km':
+					return float(res[0]) * 1000
 			else:
 				return cell['status']
 
-def get_nearest_bus_stop(lon,lat,stops):
+def get_nearest_bus_stop(lon,lat,stops,method):
 	mindis = math.inf
 	for st in stops:
 		try:
-			dis = distance((lon,lat),(st["lon"],st["lat"]))
+			dis = distance((lon,lat),(st["lon"],st["lat"]),method)
 			if dis < mindis:
 				minst = st
 		except KeyError:
 			print("key not found!")
 	return misnt
-
