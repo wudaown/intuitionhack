@@ -1,5 +1,4 @@
 from flask import  Flask, jsonify
-import json
 from controller.bus_and_stop import *
 from controller.getBusData import *
 
@@ -45,9 +44,9 @@ tasks = [
 stopName = 'Lee Wee Nam Library'
 
 @app.route('/todo/api/v1.0/eta', methods=['GET'])
-def ETA():
+def ETA(stopName):
 	for i in red_stop:
-		if (i.name == stopName):
+		if (i.name == stopName or i.code == stopName):
 			eta = bus_queue(i.code,i.line)
 			return jsonify(eta)
 
@@ -72,7 +71,29 @@ yourLocation = [
 
 @app.route('/todo/api/v1.0/gotolocation', methods=['GET'])
 def goToLocation():
-	get_nearest_bus_stop(yourLocation['lat'],yourLocation['lon'])
+	flag = False
+
+	while ( not flag):
+		for i in red_stop:
+			if (yourLocation['destStop'] == i.name):
+				line = i.line
+				flag = True
+				break
+
+		for i in blue_stop:
+			if (yourLocation['destStop'] == i.name):
+				line = i.line
+				flag = True
+				break
+
+	if (line == 'RED'):
+		nearStop = get_nearest_bus_stop(yourLocation['lon'],yourLocation['lat'],red_stop,'driving')
+	else:
+		nearStop = get_nearest_bus_stop(yourLocation['lon'],yourLocation['lat'],blue_stop,'driving')
+
+	etaToNear = bus_queue(nearStop.code, nearStop.line)
+
+
 
 
 

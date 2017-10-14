@@ -2,8 +2,10 @@ import json
 from models.BusStop import *
 from controller.getBusData import *
 from operator import itemgetter
+from app import red_stop as red_line_stops
+from app import red_dist as dist_red
 def init_red():
-	with open(r"..\BusStopRed.json", "r") as stop_r:
+	with open(r"BusStopRed.json", "r") as stop_r:
 		stop_red=json.load(stop_r)
 	red_line_stops=[]
 	Index=1
@@ -11,7 +13,7 @@ def init_red():
 		red_line_stops=insert(red_line_stops, Index, stop["lon"], stop["lat"], "RED", False, stop["code"], stop["title"])
 		Index+=1
 	red_line_stops=insert(red_line_stops, Index, stop_red[0]["lon"], stop_red[0]["lat"], "RED", False, stop_red[0]["code"], stop_red[0]["title"])
-	with open(r"..\mapdelta.json", "r") as fake_r:
+	with open(r"mapdelta.json", "r") as fake_r:
 		fake_stop_red=json.load(fake_r)
 	Index=0
 	prev_str=""
@@ -20,7 +22,7 @@ def init_red():
 		#print(fake_stop)
 		if fake_stop["title"][:-1]!=prev_str:
 			Index+=1
-		red_line_stops=insert(red_line_stops, Index, fake_stop["lon"], fake_stop["lat"], "RED", True, Code, fake_stop["title"])
+		red_line_stops=insert(red_line_stops, Index, float(fake_stop["lon"]), float(fake_stop["lat"]), "RED", True, Code, fake_stop["title"])
 		Code-=1
 		prev_str=fake_stop["title"][:-1]
 		Index+=1
@@ -32,7 +34,7 @@ def init_red():
 	return red_line_stops, dist
 #red_line_stops, dist=init_red()
 #print(dist)
-red_line_stops, dist_red=init_red()
+#red_line_stops, dist_red=init_red()
 #print("1st")
 def init_blue():
 	blue_line_stops=[]
@@ -49,12 +51,12 @@ def bus_queue(colour, code):
 		cnt=0
 		for buses in bus:
 			for i in range(0, len(red_line_stops)-1):
-				maxlon=max(red_line_stops[i]["lon"], red_line_stops[i+1]["lon"])
-				minlon=min(red_line_stops[i]["lon"], red_line_stops[i+1]["lon"])
-				maxlat=max(red_line_stops[i]["lat"], red_line_stops[i+1]["lat"])
-				minlat=min(red_line_stops[i]["lat"], red_line_stops[i+1]["lat"])
-				if minlon<=buses["lon"]<=maxlon and minlat<=buses["lat"]<=maxlat:
-					Dist=distance((buses["lon"], buses["lat"]), red_line_stops[i+1].pos, "driving")
+				maxlon=max(float(red_line_stops[i].pos[0]), float(red_line_stops[i+1].pos[0]))
+				minlon=min(float(red_line_stops[i].pos[0]), float(red_line_stops[i+1].pos[0]))
+				maxlat=max(float(red_line_stops[i].pos[1]), float(red_line_stops[i+1].pos[1]))
+				minlat=min(float(red_line_stops[i].pos[1]), float(red_line_stops[i+1].pos[1]))
+				if minlon<=float(buses["lon"])<=maxlon and minlat<=float(buses["lat"])<=maxlat:
+					Dist=distance((float(buses["lon"]), float(buses["lat"])), red_line_stops[i+1].pos, "driving")
 					if red_line_stops[i+1].code==code:
 						ETA.append((Dist, cnt))
 						cnt+=1
@@ -81,7 +83,7 @@ def bus_queue(colour, code):
 		ETA=sorted(ETA, key=itemgetter(0))
 		for i in range(0, len(ETA)):
 			Dist, index=ETA[i]
-			ETA[i]=int(3.6*Dist/bus[i]["speed"]/60)
+			ETA[i]=int(3.6*Dist/float(bus[i]["speed"])/60)
 			if i and ETA[i]<ETA[i-1]:
 				ETA[i]=ETA[i-1]
 		for i in range(0, len(ETA)):
@@ -89,5 +91,5 @@ def bus_queue(colour, code):
 	return ETA
 
 
-E=bus_queue("RED", "27011")
-print(E)
+#E=bus_queue("RED", "27011")
+#print(E)

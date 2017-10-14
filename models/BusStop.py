@@ -67,10 +67,12 @@ def distance(orginPos, destPos, method):
 def get_nearest_bus_stop(lon,lat,stops,method):
 	mindis = math.inf
 	for st in stops:
+		if st.fake:
+			continue
 		try:
 			dis = distance((lon,lat),(st["lon"],st["lat"]),method)
 			if dis < mindis:
 				minst = st
 		except KeyError:
 			print("key not found!")
-	return misnt
+	return minst
