@@ -1,4 +1,5 @@
-from flask import  Flask, jsonify
+import time
+from flask import  Flask, jsonify, request
 from controller.bus_and_stop import *
 from controller.getBusData import *
 
@@ -85,7 +86,24 @@ def goToLocation():
 			'total time by bus' : etaToDest
 		}
 	]
+	print('Sleep')
+	time.sleep(30)
+	print("Wake Up")
 	return jsonify(result)
+
+destFake = [
+	{
+		"code" : '27011'
+	}
+]
+
+@app.route('/todo/api/v1.0/notify', methods=['POST','GET'])
+def notify():
+	if request.method == 'POST':
+		while(True):
+			time.sleep(10)
+			if (judge(destFake[0]['code'])):
+				return "GET OUT"
 
 
 
