@@ -1,7 +1,7 @@
 from flask import  Flask, jsonify
 import json
-from controller.bus_and_stop import init_red, init_blue
-from controller.getBusData import Bus
+from controller.bus_and_stop import *
+from controller.getBusData import *
 
 app = Flask(__name__)
 
@@ -60,6 +60,19 @@ def INIT():
 	blueBus = bus.get_blue()
 	redBus = bus.get_red()
 	return jsonify(blueBus,redBus)
+
+
+yourLocation = [
+	{
+		"lat" : 1.3478803,
+		"lon": 103.687008,
+		"destStop" : stopName
+	}
+]
+
+@app.route('/todo/api/v1.0/gotolocation', methods=['GET'])
+def goToLocation():
+	get_nearest_bus_stop(yourLocation['lat'],yourLocation['lon'])
 
 
 

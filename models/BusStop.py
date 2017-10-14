@@ -24,7 +24,7 @@ def insert(stop,index,lon,lat,line,fake,code, name):
 
 
 
-def distance(orginPos, destPos):
+def distance(orginPos, destPos, method):
 	api_key = 'AIzaSyD-wIj4RjFGgZQriqGlMAdvwS1i2ZOcLYI'
 	base_url = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
 
@@ -34,7 +34,7 @@ def distance(orginPos, destPos):
 	payload = {
 		'origins': '|'.join(origins),
 		'destinations': '|'.join(destinations),
-		'mode': 'walking',
+		'mode': method,
 		'api_key': api_key
 	}
 
@@ -58,10 +58,3 @@ def distance(orginPos, destPos):
 				return cell['distance']['text']
 			else:
 				return cell['status']
-'''
-stop = []
-stop.append(BusStop(103.696793,1.341278,'NS','RED',False,22))
-stop.append(BusStop(103.686573,1.347243,'SS','RED',False,22))
-
-print(distance(stop[0].pos,stop[1].pos))
-'''
