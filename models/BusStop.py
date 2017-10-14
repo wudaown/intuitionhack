@@ -73,4 +73,4 @@ def get_nearest_bus_stop(lon,lat,stops,method):
 				minst = st
 		except KeyError:
 			print("key not found!")
-	return misnt
+	return minst
