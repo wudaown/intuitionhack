@@ -1,5 +1,6 @@
 import json
 import requests
+import math
 
 class BusStop:
 	def __init__(self, lon,lat,name,line,fake,code):
@@ -58,3 +59,15 @@ def distance(orginPos, destPos, method):
 				return cell['distance']['text']
 			else:
 				return cell['status']
+
+def get_nearest_bus_stop(lon,lat,stops):
+	mindis = math.inf
+	for st in stops:
+		try:
+			dis = distance((lon,lat),(st["lon"],st["lat"]))
+			if dis < mindis:
+				minst = st
+		except KeyError:
+			print("key not found!")
+	return misnt
+
