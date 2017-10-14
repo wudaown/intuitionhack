@@ -70,9 +70,26 @@ def get_nearest_bus_stop(lon,lat,stops,method):
 		if st.fake:
 			continue
 		try:
-			dis = distance((lon,lat),(st["lon"],st["lat"]),method)
+			dis = distance((lon,lat),(st.pos[0],st.pos[1]),method)
 			if dis < mindis:
 				minst = st
 		except KeyError:
 			print("key not found!")
 	return minst
+
+def getStopInfo(stopName, line, redStops, blueStops):
+	if line == 'RED':
+		for i in redStops:
+			print(i.name)
+			if stopName == i.name and not i.fake:
+				return i
+	else:
+		for i in blueStops:
+			print(i.name)
+			if	stopName == i.name and not i.fake:
+				return i
+
+
+def walkTime(orgPos,desPos):
+	dis = distance(orgPos,desPos,'walking')
+	return 3.6*dis / 5/60

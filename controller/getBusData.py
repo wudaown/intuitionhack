@@ -1,5 +1,4 @@
 import requests
-import json
 '''
 bus_color will be a list of json objects
 JSON(like python dict) keys

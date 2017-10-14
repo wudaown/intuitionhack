@@ -1,9 +1,7 @@
-import json
 from models.BusStop import *
 from controller.getBusData import *
 from operator import itemgetter
-from app import red_stop as red_line_stops
-from app import red_dist as dist_red
+
 def init_red():
 	with open(r"BusStopRed.json", "r") as stop_r:
 		stop_red=json.load(stop_r)
@@ -28,9 +26,7 @@ def init_red():
 		Index+=1
 	dist=[]
 	for i in range(0, len(red_line_stops)-1):
-		dist.append(distance(red_line_stops[i].pos, red_line_stops[i+1].pos, "driving"))
-	#for stop in red_line_stops:
-	#	print(stop.name, stop.fake, stop.code)
+		dist.append(distance(red_line_stops[i].pos, red_line_stops[i+1].pos,'driving'))
 	return red_line_stops, dist
 #red_line_stops, dist=init_red()
 #print(dist)
@@ -42,6 +38,7 @@ def init_blue():
 	return blue_line_stops, dist
 
 def bus_queue(colour, code):
+	red_line_stops ,dist_red =  init_red()
 	ETA=[]
 	if colour=="RED":
 		#print('R')
