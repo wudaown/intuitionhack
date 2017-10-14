@@ -11,6 +11,7 @@ def init_red():
 		red_line_stops=insert(red_line_stops, Index, stop["lon"], stop["lat"], "RED", False, stop["code"], stop["title"])
 		Index+=1
 	red_line_stops=insert(red_line_stops, Index, stop_red[0]["lon"], stop_red[0]["lat"], "RED", False, stop_red[0]["code"], stop_red[0]["title"])
+
 	with open(r"mapdelta.json", "r") as fake_r:
 		fake_stop_red=json.load(fake_r)
 	Index=0

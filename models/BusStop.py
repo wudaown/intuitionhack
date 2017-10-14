@@ -10,20 +10,9 @@ class BusStop:
 		self.fake = fake
 		self.code = code
 
-
-
-	def addStop(self,lon,lat,name,line,fake,code):
-		self.Stop(lon,lat,name,line,fake,code)
-
-
-	def getPos(self):
-		return self.pos
-
 def insert(stop,index,lon,lat,line,fake,code, name):
 	stop = stop[:index] + [BusStop(lon,lat,name,line,fake,code)] + stop[index:]
 	return stop
-
-
 
 def distance(orginPos, destPos, method):
 	api_key = 'AIzaSyDrd69lDQMX6WddnqVI8uSmR4pDBwhdUzc'
