@@ -60,9 +60,9 @@ def goToLocation():
 				break
 
 	if (line == 'RED'):
-		nearStop = get_nearest_bus_stop(yourLocation[0]['lon'],yourLocation[0]['lat'],red_stop,'driving')
+		nearStop = get_nearest_bus_stop(yourLocation[0]['lon'],yourLocation[0]['lat'],red_stop,'walking')
 	else:
-		nearStop = get_nearest_bus_stop(yourLocation[0]['lon'],yourLocation[0]['lat'],blue_stop,'driving')
+		nearStop = get_nearest_bus_stop(yourLocation[0]['lon'],yourLocation[0]['lat'],blue_stop,'walking')
 
 	etaToNear, bus = bus_queue(red_stop, red_dist, nearStop.code, nearStop.line)
 
@@ -86,9 +86,9 @@ def goToLocation():
 			'total time by bus' : etaToDest
 		}
 	]
-	print('Sleep')
-	time.sleep(30)
-	print("Wake Up")
+	# print('Sleep')
+	# time.sleep(30)
+	# print("Wake Up")
 	return jsonify(result)
 
 destFake = [
@@ -99,10 +99,11 @@ destFake = [
 
 @app.route('/todo/api/v1.0/notify', methods=['POST','GET'])
 def notify():
+	orgPos=(yourLocation[0]['lon'], yourLocation[0]['lat'])
 	if request.method == 'POST':
 		while(True):
 			time.sleep(10)
-			if (judge(destFake[0]['code'])):
+			if (judge(destFake[0]['code'], orgPos)):
 				return "GET OUT"
 
 
