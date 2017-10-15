@@ -69,7 +69,7 @@ def get_nearest_bus_stop(lon,lat,stops,method):
 	return minst
 
 def getStopInfo(stopName, line, redStops, blueStops):
-	if line == 'RED':
+	if line == 'Red':
 		for i in redStops:
 			if stopName == i.name and not i.fake:
 				return i

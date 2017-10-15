@@ -8,9 +8,9 @@ def init_red():
 	red_line_stops=[]
 	Index=1
 	for stop in stop_red:
-		red_line_stops=insert(red_line_stops, Index, stop["lon"], stop["lat"], "RED", False, stop["code"], stop["title"])
+		red_line_stops=insert(red_line_stops, Index, stop["lon"], stop["lat"], "Red", False, stop["code"], stop["title"])
 		Index+=1
-	red_line_stops=insert(red_line_stops, Index, stop_red[0]["lon"], stop_red[0]["lat"], "RED", False, stop_red[0]["code"], stop_red[0]["title"])
+	red_line_stops=insert(red_line_stops, Index, stop_red[0]["lon"], stop_red[0]["lat"], "Red", False, stop_red[0]["code"], stop_red[0]["title"])
 
 	with open(r"mapdelta.json", "r") as fake_r:
 		fake_stop_red=json.load(fake_r)
@@ -21,7 +21,7 @@ def init_red():
 		#print(fake_stop)
 		if fake_stop["title"][:-1]!=prev_str:
 			Index+=1
-		red_line_stops=insert(red_line_stops, Index, float(fake_stop["lon"]), float(fake_stop["lat"]), "RED", True, Code, fake_stop["title"])
+		red_line_stops=insert(red_line_stops, Index, float(fake_stop["lon"]), float(fake_stop["lat"]), "Red", True, Code, fake_stop["title"])
 		Code-=1
 		prev_str=fake_stop["title"][:-1]
 		Index+=1
@@ -39,9 +39,9 @@ def init_blue():
 	blue_line_stops=[]
 	Index=1
 	for stop in stop_blue:
-		blue_line_stops=insert(blue_line_stops, Index, stop["lon"], stop["lat"], "BLUE", False, stop["code"], stop["title"])
+		blue_line_stops=insert(blue_line_stops, Index, stop["lon"], stop["lat"], "Blue", False, stop["code"], stop["title"])
 		Index+=1
-	blue_line_stops=insert(blue_line_stops, Index, stop_blue[0]["lon"], stop_blue[0]["lat"], "BLUE", False, stop_blue[0]["code"], stop_blue[0]["title"])
+	blue_line_stops=insert(blue_line_stops, Index, stop_blue[0]["lon"], stop_blue[0]["lat"], "Blue", False, stop_blue[0]["code"], stop_blue[0]["title"])
 
 	with open(r"mapgamma.json", "r") as fake_r:
 		fake_stop_blue=json.load(fake_r)
@@ -52,7 +52,7 @@ def init_blue():
 		#print(fake_stop)
 		if fake_stop["title"][:-1]!=prev_str:
 			Index+=1
-		blue_line_stops=insert(blue_line_stops, Index, float(fake_stop["lon"]), float(fake_stop["lat"]), "BLUE", True, Code, fake_stop["title"])
+		blue_line_stops=insert(blue_line_stops, Index, float(fake_stop["lon"]), float(fake_stop["lat"]), "Blue", True, Code, fake_stop["title"])
 		Code-=1
 		prev_str=fake_stop["title"][:-1]
 		Index+=1
@@ -65,7 +65,7 @@ def bus_queue(stops, dist, colour, code):
 	#red_line_stops ,dist_red =  init_red()
 	ETA=[]
 	bus=None
-	if colour=="RED":
+	if colour=="Red":
 		#print('R')
 		b=Bus()
 		b.update_response()
@@ -189,5 +189,5 @@ def judge(code, pos, stops):
 						return True
 					else:
 						return False
-#E=bus_queue("RED", "27011")
+#E=bus_queue("Red", "27011")
 #print(E)

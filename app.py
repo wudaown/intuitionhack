@@ -61,7 +61,7 @@ def goToLocation():
 				flag = True
 				break
 
-	if (line == 'RED'):
+	if (line == 'Red'):
 		nearStop = get_nearest_bus_stop(yourLocation[0]['lon'],yourLocation[0]['lat'],red_stop,'walking')
 	else:
 		nearStop = get_nearest_bus_stop(yourLocation[0]['lon'],yourLocation[0]['lat'],blue_stop,'walking')
