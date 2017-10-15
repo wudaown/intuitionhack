@@ -6,7 +6,12 @@ from controller.getBusData import *
 app = Flask(__name__)
 
 red_stop, red_dist = init_red()
+blue_stop, blue_dist=init_blue()
+'''with open('red_dist.json','w') as f:
+	json.dump(red_dist,f)
 blue_stop, blue_dist = init_blue()
+with open('blue_dist.json','w') as f:
+	json.dump(blue_dist,f)'''
 #for i in blue_stop:
 #	print(i.name, i.pos, i.line, i.fake, i.code)
 #print(blue_dist)

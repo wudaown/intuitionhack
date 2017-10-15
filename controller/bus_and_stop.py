@@ -26,8 +26,10 @@ def init_red():
 		prev_str=fake_stop["title"][:-1]
 		Index+=1
 	dist=[]
-	for i in range(0, len(red_line_stops)-1):
-		dist.append(distance(red_line_stops[i].pos, red_line_stops[i+1].pos,'driving'))
+	with open(r"red_dist.json", "r") as r_dist:
+		red_dist=json.load(r_dist)
+	for d in red_dist:
+		dist.append(float(d))
 	return red_line_stops, dist
 #red_line_stops, dist=init_red()
 #print(dist)
@@ -57,8 +59,10 @@ def init_blue():
 		prev_str=fake_stop["title"][:-1]
 		Index+=1
 	dist=[]
-	for i in range(0, len(blue_line_stops)-1):
-		dist.append(distance(blue_line_stops[i].pos, blue_line_stops[i+1].pos,'driving'))
+	with open(r"blue_dist.json", "r") as b_dist:
+		blue_dist=json.load(b_dist)
+	for d in blue_dist:
+		dist.append(float(d))
 	return blue_line_stops, dist
 
 def bus_queue(stops, dist, colour, code):
