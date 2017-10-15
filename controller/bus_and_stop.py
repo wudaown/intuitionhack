@@ -165,7 +165,8 @@ def dumb(etaToNear, Spos, Tpos, bus):
 	DIST=distance(Spos, Tpos, "driving")
 	for i in range(len(etaToNear)):
 		Dist, index=etaToNear[i]
-		if bus[index]["speed"]=="0":
+		#print(bus[index]["speed"], index)
+		if int(bus[index]["speed"])==0:
 			etaToNear[i]="--"
 			etaToDest.append("--")
 			flag=False

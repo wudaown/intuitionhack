@@ -26,10 +26,24 @@ stopName = 'Lee Wee Nam Library'
 @app.route('/todo/api/v1.0/eta', methods=['GET'])
 def ETA():
 	for i in red_stop:
+		#print(i.name)
 		if (i.name == stopName or i.code == stopName):
-			eta = bus_queue(red_stop, red_dist, i.code,i.line)
+			eta, bus = bus_queue(red_stop, red_dist, "Red", i.code)
+			#print(eta)
+			flag=True
+			for i in range(len(eta)):
+				Dist, index=eta[i]
+				if int(bus[index]["speed"])==0:
+					eta[i]="--"
+					flag=False
+					continue
+				eta[i]=3.6*Dist/float(bus[index]["speed"])/60
+				if i and flag:
+					if eta[i]<eta[i-1]:
+						eta[i]=eta[i-1]
+				flag=True
+			#eta, tmp=dumb(eta, i.pos, stop_pos, bus)
 			return jsonify(eta)
-
 
 
 @app.route('/todo/api/v1.0/init',methods=['GET'])
@@ -71,7 +85,7 @@ def goToLocation():
 	else:
 		nearStop = get_nearest_bus_stop(yourLocation[0]['lon'],yourLocation[0]['lat'],blue_stop,'walking')
 
-	etaToNear, bus = bus_queue(red_stop, red_dist, nearStop.code, nearStop.line)
+	etaToNear, bus = bus_queue(red_stop, red_dist, nearStop.line, nearStop.code)
 
 	destInfo = getStopInfo(yourLocation[0]['destStop'], line, red_stop, blue_stop)
 	#etaToDest = bus_queue(red_stop, red_dist, destInfo.line,destInfo.code)
