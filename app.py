@@ -7,7 +7,9 @@ app = Flask(__name__)
 
 red_stop, red_dist = init_red()
 blue_stop, blue_dist = init_blue()
-
+#for i in blue_stop:
+#	print(i.name, i.pos, i.line, i.fake, i.code)
+#print(blue_dist)
 
 @app.route("/")
 def hello():
